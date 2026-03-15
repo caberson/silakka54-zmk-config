@@ -5,77 +5,226 @@
  */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 
 / {
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            display-name = "hm";
+        };
+
+        ltb: layer_tap_balanced {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <175>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <125>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            display-name = "lt_bal";
+        };
+
+        lt3: layer_tap_3 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <0>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            display-name = "lt3";
+        };
+
+        mBsDel: morph_backspace_del {
+            compatible = "zmk,behavior-mod-morph";
+            label = "morph_backspace_del";
+            bindings = <&kp BACKSPACE>, <&kp DEL>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        tdMinusUnd: tdMinusUnd {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDMINUSUND";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp MINUS>, <&kp UNDERSCORE>;
+        };
+
+        tdEqPlus: tdEqPlus {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDEQPLUS";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp EQUAL>, <&kp PLUS>;
+        };
+
+        tdLBrkBrc: tdLBrkBrc {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDLBRKBRC";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LEFT_BRACKET>, <&kp LEFT_BRACE>;
+        };
+
+        tdRBrkBrc: tdRBrkBrc {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDRBRKBRC";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp RIGHT_BRACKET>, <&kp RIGHT_BRACE>;
+        };
+
+        tdGrvTil: tdGrvTil {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDGRVTIL";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp GRAVE>, <&kp TILDE>;
+        };
+
+        tdBslhPip: tdBslhPip {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDBSLHPIP";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp BACKSLASH>, <&kp PIPE>;
+        };
+
+        tdSqDq: tdSqDq {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDSQDQ";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp SINGLE_QUOTE>, <&kp DOUBLE_QUOTES>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        combo_esc {
+            bindings = <&kp ESC>;
+            key-positions = <31 32>;
+            layers = <0>;
+            timeout-ms = <40>;
+            require-prior-idle-ms = <125>;
+        };
+
+        combo_quote {
+            bindings = <&kp SINGLE_QUOTE>;
+            key-positions = <33 34>;
+            layers = <0>;
+        };
+
+        combo_eq {
+            bindings = <&kp EQUAL>;
+            key-positions = <32 33>;
+            layers = <0>;
+        };
+
+        combo_minus {
+            bindings = <&kp MINUS>;
+            key-positions = <20 21>;
+            layers = <0>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
-// ------------------------------------------------------------------------------------------------------------
-// |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   `   |
-// |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   -   |
-// |  CTRL |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   |  n/a   |  |  n/a  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-//                     | GUI  | LOWER| SPACE|  n/a   |  |  n/a  | ENTER| RAISE | BSPC  |
-// Note: Silakka54 has 54 keys - the 4 positions marked n/a are not present (inner thumb + encoder positions)
+            // ------------------------------------------------------------------------------------------------------------
+            // |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |  DEL  |
+            // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   \   |
+            // | CTRL  |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |  '/"  |
+            // | SHIFT |  Z  |CTL/X|ALT/C |GUI/V |  B   |  n/a   |  |  n/a  |  N   |GUI/M  |ALT/,  |CTL/. |   /   | SHIFT |
+            //                     | GUI  |L1/TAB| SPACE|  n/a   |  |  n/a  |L3/RET| BSPC  |L2/=   |
+            // Note: Silakka54 has 54 keys - the 4 positions marked n/a are not present (inner thumb + encoder positions)
+            // Bottom row mods: Tap for letter, hold for modifier (Ctrl/Alt/GUI on X/C/V and M/,/.)
+            // Thumb layers: L1/TAB = hold for Layer 1, tap for Tab; L3/RET = hold for Layer 3, tap for Return (no idle requirement); L2/= = hold for Layer 2, tap for Equal
+
             display-name = "Base";
             bindings = <
-&kp ESC   &kp N1 &kp N2 &kp N3   &kp N4 &kp N5                     &kp N6  &kp N7   &kp N8    &kp N9  &kp N0   &kp GRAVE
-&kp TAB   &kp Q  &kp W  &kp E    &kp R  &kp T                      &kp Y   &kp U    &kp I     &kp O   &kp P    &kp MINUS
-&kp LCTRL &kp A  &kp S  &kp D    &kp F  &kp G                      &kp H   &kp J    &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT &kp Z  &kp X  &kp C    &kp V  &kp B  &none     &none     &kp N   &kp M    &kp COMMA &kp DOT &kp FSLH &kp RSHFT
-                        &kp LGUI &mo 1  &kp SPACE &none  &none     &kp RET &mo 2    &kp BSPC
+&kp ESCAPE  &kp N1  &kp N2       &kp N3          &kp N4          &kp N5                     &kp N6         &kp N7        &kp N8              &kp N9            &kp N0    &kp DEL
+&kp TAB     &kp Q   &kp W        &kp E           &kp R           &kp T                      &kp Y          &kp U         &kp I               &kp O             &kp P     &kp BACKSLASH
+&kp LCTRL   &kp A   &kp S        &kp D           &kp F           &kp G                      &kp H          &kp J         &kp K               &kp L             &kp SEMI  &tdSqDq
+&kp LSHFT   &kp Z   &hm LCTRL X  &hm LEFT_ALT C  &hm LEFT_GUI V  &kp B      &none    &none  &kp N          &hm LGUI M    &hm LEFT_ALT COMMA  &hm LCTRL PERIOD  &kp FSLH  &kp RSHFT
+                                 &kp LGUI        &ltb 1 TAB      &kp SPACE  &none    &none  &ltb 2 RETURN  &ltb 2 EQUAL  &mBsDel
             >;
         };
 
         lower_layer {
-// ------------------------------------------------------------------------------------------------------------
-// | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   | USB  | BLE   |       |      |       |BTCLRALL|
-// |  F1   |  F2 |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
-// |   `   |  !  |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   |   ~   |
-// |       |     |     |      |      |      |  n/a   |  |  n/a  |      |  _    |  +    |  {   |   }   |  "|"  |
-//                     |      |      |      |  n/a   |  |  n/a  |      |       |       |
+            // ------------------------------------------------------------------------------------------------------------
+            // | trans | trans|trans| trans| trans| trans|                   | trans| trans | trans | trans| trans | trans |
+            // | trans |  !   |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   | trans |
+            // | trans |  1   |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |  \|   |
+            // | trans |  6   |  7  |  8   |  9   |  0   |  n/a   |  |  n/a  |  `~  |  -_   |  =+   |  [{  |   ]}  | trans |
+            //                     | trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans |
+            // Tap-dances: `~ = tap for `, double-tap for ~; -_ = tap -, double-tap _; etc.
+
             display-name = "Lower";
             bindings = <
-&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                 &out OUT_USB &out OUT_BLE &trans          &trans   &trans   &bt BT_CLR_ALL
-&kp F1     &kp F2       &kp F3       &kp F4       &kp F5       &kp F6                       &kp F7       &kp F8       &kp F9          &kp F10  &kp F11  &kp F12
-&kp GRAVE  &kp EXCL     &kp AT       &kp HASH     &kp DOLLAR   &kp PRCNT                    &kp CARET    &kp AMPS     &kp KP_MULTIPLY &kp LPAR &kp RPAR &kp TILDE
-&trans     &trans       &trans       &trans       &trans       &trans    &none     &none   &trans       &kp MINUS    &kp KP_PLUS     &kp LBRC &kp RBRC &kp PIPE
-                                     &trans       &trans       &trans    &none     &none   &trans       &trans       &trans
+&trans  &trans           &trans       &trans    &trans      &trans                       &trans     &trans         &trans        &trans                &trans                 &trans
+&trans  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT                  &kp CARET  &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
+&trans  &kp N1           &kp N2       &kp N3    &kp N4      &kp N5                       &kp N6     &kp N7         &kp N8        &kp N9                &kp N0                 &tdBslhPip
+&trans  &kp N6           &kp N7       &kp N8    &kp N9      &kp N0       &none    &none  &tdGrvTil  &tdMinusUnd    &tdEqPlus     &tdLBrkBrc            &tdRBrkBrc             &trans
+                                      &trans    &trans      &trans       &none    &none  &trans     &trans         &trans
             >;
         };
 
         raise_layer {
-// ------------------------------------------------------------------------------------------------------------
-// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
-// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
-// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |  n/a   |  |  n/a  |  +   |   -   |   =   |  [   |   ]   |   \   |
-//                     |      |      |      |  n/a   |  |  n/a  |      |       |       |
+            // ------------------------------------------------------------------------------------------------------------
+            // | trans | trans|trans| trans| trans| trans|                   | trans| trans | trans | trans| trans | trans |
+            // |   `   |  1   |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   | trans |
+            // |  F1   |  F2  |  F3 |  F4  |  F5  |  F6  |                   | trans|   ←   |   ↓   |  ↑   |   →   | trans |
+            // |  F7   |  F8  |  F9 |  F10 |  F11 |  F12 |  n/a   |  |  n/a  | PREV | PLAY  | NEXT  | VOL- | VOL+  | MUTE  |
+            //                     | trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans |
+
             display-name = "Raise";
             bindings = <
-&trans    &trans &trans &trans  &trans  &trans                       &trans      &trans    &trans    &trans   &trans    &trans
-&kp GRAVE &kp N1 &kp N2 &kp N3  &kp N4  &kp N5                       &kp N6      &kp N7    &kp N8    &kp N9   &kp N0    &trans
-&kp F1    &kp F2 &kp F3 &kp F4  &kp F5  &kp F6                       &trans      &kp LEFT  &kp DOWN  &kp UP   &kp RIGHT &trans
-&kp F7    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &none     &none    &kp KP_PLUS &kp MINUS &kp EQUAL &kp LBKT &kp RBKT  &kp BSLH
-                        &trans  &trans  &trans    &none     &none    &trans      &trans    &trans
+&trans     &trans  &trans  &trans   &trans   &trans                   &trans      &trans            &trans      &trans        &trans        &trans
+&kp GRAVE  &kp N1  &kp N2  &kp N3   &kp N4   &kp N5                   &kp N6      &kp N7            &kp N8      &kp N9        &kp N0        &trans
+&kp F1     &kp F2  &kp F3  &kp F4   &kp F5   &kp F6                   &trans      &kp LEFT          &kp DOWN    &kp UP        &kp RIGHT     &trans
+&kp F7     &kp F8  &kp F9  &kp F10  &kp F11  &kp F12  &none    &none  &kp C_PREV  &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_MUTE
+                           &trans   &trans   &trans   &none    &none  &trans      &trans            &trans
             >;
         };
 
-        extra_1 {
-            status = "reserved";
+        misc_layer {
+            // ------------------------------------------------------------------------------------------------------------
+            // | BTCLR | BT0  | BT1 | BT2  | BT3  | BT4  |                   | USB  | BLE   | trans | trans| trans |BT_CLR_A|
+            // | trans | trans|trans| trans| trans| trans|                   | trans| trans | trans | trans| trans | trans |
+            // | trans | trans|trans| trans| trans| trans|                   | trans| HOME  | PG_DN | PG_UP| END   | trans |
+            // | trans | trans|trans| trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans | trans| trans | trans |
+            //                     | trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans |
+            // Note: Hold Lower(L1)+Raise(L2) simultaneously to access this layer (Bluetooth, USB/BLE switching, navigation)
+
+            display-name = "misc";
+            bindings = <
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &out OUT_USB  &out OUT_BLE  &kp N7         &kp N8       &kp N9   &bt BT_CLR_ALL
+&kp A       &kp B         &kp C         &kp D         &kp E         &kp F                         &kp G         &kp H         &kp I          &kp J        &kp K    &kp L
+&trans      &trans        &trans        &trans        &trans        &trans                        &trans        &kp HOME      &kp PAGE_DOWN  &kp PAGE_UP  &kp END  &trans
+&trans      &trans        &trans        &trans        &trans        &trans        &none    &none  &trans        &trans        &trans         &trans       &trans   &trans
+                                        &trans        &trans        &trans        &none    &none  &trans        &trans        &trans
+            >;
         };
 
-        extra_2 {
-            status = "reserved";
-        };
+        extra_2 { status = "reserved"; };
 
-        extra_3 {
-            status = "reserved";
-        };
+        extra_3 { status = "reserved"; };
     };
 };
