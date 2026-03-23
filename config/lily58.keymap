@@ -54,13 +54,14 @@
 
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <(MOD_LCTL|MOD_LALT|MOD_LGUI)>;
         };
 
         tdMinusUnd: tdMinusUnd {
             compatible = "zmk,behavior-tap-dance";
             label = "TDMINUSUND";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp MINUS>, <&kp UNDERSCORE>;
         };
 
@@ -68,7 +69,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TDEQPLUS";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp EQUAL>, <&kp PLUS>;
         };
 
@@ -76,7 +77,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TDLBRKBRC";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp LEFT_BRACKET>, <&kp LEFT_BRACE>;
         };
 
@@ -84,7 +85,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TDRBRKBRC";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp RIGHT_BRACKET>, <&kp RIGHT_BRACE>;
         };
 
@@ -92,7 +93,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TDGRVTIL";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp GRAVE>, <&kp TILDE>;
         };
 
@@ -100,7 +101,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TDBSLHPIP";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp BACKSLASH>, <&kp PIPE>;
         };
 
@@ -108,7 +109,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TDSQDQ";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <180>;
             bindings = <&kp SINGLE_QUOTE>, <&kp DOUBLE_QUOTES>;
         };
     };
@@ -124,21 +125,9 @@
             require-prior-idle-ms = <125>;
         };
 
-        combo_quote {
-            bindings = <&kp SINGLE_QUOTE>;
-            key-positions = <33 34>;
-            layers = <0>;
-        };
-
         combo_eq {
             bindings = <&kp EQUAL>;
             key-positions = <32 33>;
-            layers = <0>;
-        };
-
-        combo_minus {
-            bindings = <&kp MINUS>;
-            key-positions = <20 21>;
             layers = <0>;
         };
     };
@@ -159,11 +148,11 @@
 
             display-name = "Base";
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2       &kp N3          &kp N4          &kp N5                     &kp N6         &kp N7        &kp N8              &kp N9            &kp N0    &kp DEL
-&kp TAB     &kp Q   &kp W        &kp E           &kp R           &kp T                      &kp Y          &kp U         &kp I               &kp O             &kp P     &kp BACKSLASH
-&kp LCTRL   &kp A   &kp S        &kp D           &kp F           &kp G                      &kp H          &kp J         &kp K               &kp L             &kp SEMI  &tdSqDq
-&kp LSHFT   &kp Z   &hm LCTRL X  &hm LEFT_ALT C  &hm LEFT_GUI V  &kp B      &none    &none  &kp N          &hm LGUI M    &hm LEFT_ALT COMMA  &hm LCTRL PERIOD  &kp FSLH  &kp RSHFT
-                                 &kp LGUI        &ltb 1 TAB      &kp SPACE  &none    &none  &ltb 2 RETURN  &ltb 2 EQUAL  &mBsDel
+&kp ESCAPE  &kp N1  &kp N2  &kp N3    &kp N4  &kp N5                     &kp N6         &kp N7   &kp N8        &kp N9      &kp N0    &kp BACKSPACE
+&kp TAB     &kp Q   &kp W   &kp E     &kp R   &kp T                      &kp Y          &kp U    &kp I         &kp O       &kp P     &kp BACKSLASH
+&kp LCTRL   &kp A   &kp S   &kp D     &kp F   &kp G                      &kp H          &kp J    &kp K         &kp L       &kp SEMI  &kp SINGLE_QUOTE
+&kp LSHFT   &kp Z   &kp X   &kp C     &kp V   &kp B      &none    &none  &kp N          &kp M    &kp COMMA     &kp PERIOD  &kp FSLH  &kp RSHFT
+                            &kp LGUI  &mo 1   &kp SPACE  &none    &none  &ltb 2 RETURN  &mBsDel  &kp LEFT_ALT
             >;
         };
 
@@ -178,11 +167,11 @@
 
             display-name = "Lower";
             bindings = <
-&trans  &trans           &trans       &trans    &trans      &trans                       &trans     &trans         &trans        &trans                &trans                 &trans
-&trans  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT                  &kp CARET  &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
-&trans  &kp N1           &kp N2       &kp N3    &kp N4      &kp N5                       &kp N6     &kp N7         &kp N8        &kp N9                &kp N0                 &tdBslhPip
-&trans  &kp N6           &kp N7       &kp N8    &kp N9      &kp N0       &none    &none  &tdGrvTil  &tdMinusUnd    &tdEqPlus     &tdLBrkBrc            &tdRBrkBrc             &trans
-                                      &trans    &trans      &trans       &none    &none  &trans     &trans         &trans
+&trans  &trans           &trans       &trans    &trans      &trans                       &trans     &trans          &trans        &trans                &trans                 &trans
+&trans  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT                  &kp CARET  &kp AMPERSAND   &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
+&trans  &kp N1           &kp N2       &kp N3    &kp N4      &kp N5                       &kp GRAVE  &kp MINUS       &kp EQUAL     &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &trans
+&trans  &kp N6           &kp N7       &kp N8    &kp N9      &kp N0       &none    &none  &kp TILDE  &kp UNDERSCORE  &kp PLUS      &kp LEFT_BRACE        &kp RIGHT_BRACE        &trans
+                                      &trans    &trans      &trans       &none    &none  &trans     &kp SPACE       &trans
             >;
         };
 
@@ -196,11 +185,11 @@
 
             display-name = "Raise";
             bindings = <
-&trans     &trans  &trans  &trans   &trans   &trans                   &trans      &trans            &trans      &trans        &trans        &trans
-&kp GRAVE  &kp N1  &kp N2  &kp N3   &kp N4   &kp N5                   &kp N6      &kp N7            &kp N8      &kp N9        &kp N0        &trans
-&kp F1     &kp F2  &kp F3  &kp F4   &kp F5   &kp F6                   &trans      &kp LEFT          &kp DOWN    &kp UP        &kp RIGHT     &trans
-&kp F7     &kp F8  &kp F9  &kp F10  &kp F11  &kp F12  &none    &none  &kp C_PREV  &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_MUTE
-                           &trans   &trans   &trans   &none    &none  &trans      &trans            &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &kp C_PREV  &kp C_PLAY_PAUSE  &kp C_NEXT    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_MUTE
+&trans      &trans        &trans        &trans        &trans        &trans                        &kp HOME    &kp PAGE_DOWN     &kp UP_ARROW  &kp PAGE_UP        &trans           &trans
+&kp F1      &kp F2        &kp F3        &kp F4        &kp F5        &kp F6                        &kp END     &kp LEFT_ARROW    &kp DOWN      &kp RIGHT          &trans           &trans
+&kp F7      &kp F8        &kp F9        &kp F10       &kp F11       &kp F12       &none    &none  &trans      &trans            &trans        &trans             &trans           &trans
+                                        &trans        &trans        &trans        &none    &none  &trans      &trans            &trans
             >;
         };
 
@@ -211,14 +200,14 @@
             // | trans | trans|trans| trans| trans| trans|                   | trans| HOME  | PG_DN | PG_UP| END   | trans |
             // | trans | trans|trans| trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans | trans| trans | trans |
             //                     | trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans |
-            // Note: Hold Lower(L1)+Raise(L2) simultaneously to access this layer (Bluetooth, USB/BLE switching, navigation)
+            // Note: Access via hold Enter - Bluetooth controls, USB/BLE switching, navigation keys
 
             display-name = "misc";
             bindings = <
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &out OUT_USB  &out OUT_BLE  &kp N7         &kp N8       &kp N9   &bt BT_CLR_ALL
-&kp A       &kp B         &kp C         &kp D         &kp E         &kp F                         &kp G         &kp H         &kp I          &kp J        &kp K    &kp L
-&trans      &trans        &trans        &trans        &trans        &trans                        &trans        &kp HOME      &kp PAGE_DOWN  &kp PAGE_UP  &kp END  &trans
-&trans      &trans        &trans        &trans        &trans        &trans        &none    &none  &trans        &trans        &trans         &trans       &trans   &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &out OUT_USB  &out OUT_BLE  &trans         &trans       &trans     &bt BT_CLR_ALL
+&trans      &trans        &trans        &trans        &trans        &trans                        &trans        &trans        &trans         &trans       &trans     &trans
+&trans      &trans        &trans        &trans        &trans        &trans                        &trans        &kp LEFT      &kp DOWN       &kp UP       &kp RIGHT  &trans
+&trans      &trans        &trans        &trans        &trans        &trans        &none    &none  &trans        &kp HOME      &kp PAGE_DOWN  &kp PAGE_UP  &kp END    &trans
                                         &trans        &trans        &trans        &none    &none  &trans        &trans        &trans
             >;
         };
