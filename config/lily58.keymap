@@ -11,19 +11,21 @@
 
 / {
     behaviors {
-        hm: homerow_mods {
+        hml: hmL {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <150>;
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
 
             display-name = "hm";
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <52 51 50 6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 44 45 46 47 48 49 55 56 57>;
         };
 
-        ltb: layer_tap_balanced {
+        ltb: ltBal {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <175>;
@@ -35,21 +37,8 @@
             display-name = "lt_bal";
         };
 
-        lt3: layer_tap_3 {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <200>;
-            require-prior-idle-ms = <0>;
-            flavor = "balanced";
-            bindings = <&mo>, <&kp>;
-
-            display-name = "lt3";
-        };
-
-        mBsDel: morph_backspace_del {
+        mBsDel: morphBackspaceDel {
             compatible = "zmk,behavior-mod-morph";
-            label = "morph_backspace_del";
             bindings = <&kp BACKSPACE>, <&kp DEL>;
 
             #binding-cells = <0>;
@@ -112,6 +101,40 @@
             tapping-term-ms = <180>;
             bindings = <&kp SINGLE_QUOTE>, <&kp DOUBLE_QUOTES>;
         };
+
+        hmr: hmR {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            display-name = "hm";
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <52 51 50 55 56 57 0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41>;
+            label = "HMR";
+        };
+
+        htRepeat: htRepeat {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HTREPEAT";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+        };
+
+        tdBsDel: tdBsDel {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TDBSDEL";
+            #binding-cells = <0>;
+            bindings =
+                <&htRepeat BACKSPACE BACKSPACE>,
+                <&htRepeat DELETE DELETE>;
+        };
     };
 
     combos {
@@ -119,7 +142,7 @@
 
         combo_esc {
             bindings = <&kp ESC>;
-            key-positions = <31 32>;
+            key-positions = <19 20>;
             layers = <0>;
             timeout-ms = <40>;
             require-prior-idle-ms = <125>;
@@ -127,7 +150,7 @@
 
         combo_eq {
             bindings = <&kp EQUAL>;
-            key-positions = <32 33>;
+            key-positions = <33 31>;
             layers = <0>;
         };
     };
@@ -137,22 +160,21 @@
 
         default_layer {
             // ------------------------------------------------------------------------------------------------------------
-            // |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |  DEL  |
+            // |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |  BSPC |
             // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   \   |
-            // | CTRL  |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |  '/"  |
-            // | SHIFT |  Z  |CTL/X|ALT/C |GUI/V |  B   |  n/a   |  |  n/a  |  N   |GUI/M  |ALT/,  |CTL/. |   /   | SHIFT |
-            //                     | GUI  |L1/TAB| SPACE|  n/a   |  |  n/a  |L3/RET| BSPC  |L2/=   |
-            // Note: Silakka54 has 54 keys - the 4 positions marked n/a are not present (inner thumb + encoder positions)
-            // Bottom row mods: Tap for letter, hold for modifier (Ctrl/Alt/GUI on X/C/V and M/,/.)
-            // Thumb layers: L1/TAB = hold for Layer 1, tap for Tab; L3/RET = hold for Layer 3, tap for Return (no idle requirement); L2/= = hold for Layer 2, tap for Equal
+            // | CTRL  |GUI/A|ALT/S|CTL/D |  F   |  G   |                   |  H   |  J    |CTL/K  |ALT/L |GUI/; |  '/"  |
+            // | SHIFT |  Z  |  X  |  C   |  V   |  B   |  n/a   |  |  n/a  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+            //                     | GUI  |L1/TAB| SPACE|  n/a   |  |  n/a  |L2/RET| BSPC  | ALT   |
+            // Note: Home row mods - A/S/D = GUI/Alt/Ctrl (left), K/L/; = Ctrl/Alt/GUI (right)
+            // Dedicated Ctrl on left corner for instant terminal commands
 
             display-name = "Base";
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2  &kp N3    &kp N4  &kp N5                     &kp N6         &kp N7   &kp N8        &kp N9      &kp N0    &kp BACKSPACE
-&kp TAB     &kp Q   &kp W   &kp E     &kp R   &kp T                      &kp Y          &kp U    &kp I         &kp O       &kp P     &kp BACKSLASH
-&kp LCTRL   &kp A   &kp S   &kp D     &kp F   &kp G                      &kp H          &kp J    &kp K         &kp L       &kp SEMI  &kp SINGLE_QUOTE
-&kp LSHFT   &kp Z   &kp X   &kp C     &kp V   &kp B      &none    &none  &kp N          &kp M    &kp COMMA     &kp PERIOD  &kp FSLH  &kp RSHFT
-                            &kp LGUI  &mo 1   &kp SPACE  &none    &none  &ltb 2 RETURN  &mBsDel  &kp LEFT_ALT
+&kp ESCAPE  &kp N1       &kp N2       &kp N3        &kp N4  &kp N5                     &kp N6         &kp N7    &kp N8        &kp N9       &kp N0          &kp BACKSPACE
+&kp TAB     &kp Q        &kp W        &kp E         &kp R   &kp T                      &kp Y          &kp U     &kp I         &kp O        &kp P           &kp BACKSLASH
+&kp LCTRL   &hml LGUI A  &hml LALT S  &hml LCTRL D  &kp F   &kp G                      &kp H          &kp J     &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SINGLE_QUOTE
+&kp LSHFT   &kp Z        &kp X        &kp C         &kp V   &kp B      &none    &none  &kp N          &kp M     &kp COMMA     &kp PERIOD   &kp FSLH        &kp RSHFT
+                                      &kp LGUI      &mo 1   &kp SPACE  &none    &none  &ltb 2 RETURN  &tdBsDel  &kp LEFT_ALT
             >;
         };
 
@@ -171,7 +193,7 @@
 &trans  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT                  &kp CARET  &kp AMPS        &kp ASTRK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
 &trans  &kp N1           &kp N2       &kp N3    &kp N4      &kp N5                       &kp GRAVE  &kp MINUS       &kp EQUAL  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &trans
 &trans  &kp NUMBER_6     &kp N7       &kp N8    &kp N9      &kp N0       &none    &none  &kp TILDE  &kp UNDERSCORE  &kp PLUS   &kp LEFT_BRACE        &kp RIGHT_BRACE        &trans
-                                      &trans    &trans      &trans       &none    &none  &trans     &kp SPACE       &trans
+                                      &trans    &trans      &trans       &none    &none  &trans     &trans          &trans
             >;
         };
 
@@ -185,11 +207,11 @@
 
             display-name = "Raise";
             bindings = <
-&bt BT_CLR  &bt BT_SEL 0      &bt BT_SEL 1  &bt BT_SEL 2       &bt BT_SEL 3     &bt BT_SEL 4                  &trans    &trans          &trans        &trans       &trans  &trans
-&kp C_PREV  &kp C_PLAY_PAUSE  &kp C_NEXT    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_MUTE                    &kp HOME  &kp PAGE_DOWN   &kp UP_ARROW  &kp PAGE_UP  &trans  &trans
-&kp F1      &kp F2            &kp F3        &kp F4             &kp F5           &kp F6                        &kp END   &kp LEFT_ARROW  &kp DOWN      &kp RIGHT    &trans  &trans
-&kp F7      &kp F8            &kp F9        &kp F10            &kp F11          &kp F12       &none    &none  &trans    &trans          &trans        &trans       &trans  &trans
-                                            &trans             &trans           &trans        &none    &none  &trans    &trans          &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &trans    &trans          &trans            &trans       &trans        &trans
+&trans      &trans        &trans        &trans        &trans        &trans                        &kp HOME  &kp PAGE_DOWN   &kp UP_ARROW      &kp PAGE_UP  &kp K_MUTE    &trans
+&kp F1      &kp F2        &kp F3        &kp F4        &kp F5        &kp F6                        &kp END   &kp LEFT_ARROW  &kp DOWN          &kp RIGHT    &kp C_VOL_DN  &trans
+&kp F7      &kp F8        &kp F9        &kp F10       &kp F11       &kp F12       &none    &none  &trans    &kp C_PREVIOUS  &kp C_PLAY_PAUSE  &kp C_NEXT   &kp C_VOL_UP  &trans
+                                        &trans        &trans        &trans        &none    &none  &trans    &trans          &trans
             >;
         };
 
