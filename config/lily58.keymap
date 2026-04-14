@@ -81,10 +81,43 @@
 
             #binding-cells = <2>;
             tapping-term-ms = <200>;
-            quick-tap-ms = <175>;
+            quick-tap-ms = <200>;
             flavor = "balanced";
             require-prior-idle-ms = <150>;
             hold-while-undecided;
+        };
+
+        hmShiftL: hmShiftL {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMSHIFTL";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            hold-trigger-key-positions = <6 7 8 9 18 19 20 21 30 31 32 33 44 45 46 47 55 56 57 10 11 10 11 22 23 34 35 48 49>;
+            hold-while-undecided;
+            hold-trigger-on-release;
+        };
+
+        hmShiftR: hmShiftR {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMSHIFTR";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            hold-while-undecided;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41 50 51 52>;
+        };
+
+        htSkyShift: htSkyShift {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HTSKYSHIFT";
+            bindings = <&kp>, <&sk>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
         };
     };
 
@@ -141,7 +174,7 @@
             bindings = <
 &ltb 2 ESC        &kp N1       &kp N2       &kp N3               &kp N4                &kp N5                        &kp N6        &kp N7                   &kp N8               &kp N9       &kp N0          &kp BACKSPACE
 &kp TAB           &kp Q        &kp W        &kp E                &kp R                 &kp T                         &kp Y         &kp U                    &kp I                &kp O        &kp P           &ltb 3 BACKSLASH
-&mtb LCTRL GRAVE  &hml LGUI A  &hml LALT S  &hml LEFT_CONTROL D  &kp F                 &kp G                         &kp H         &kp J                    &hmr LEFT_CONTROL K  &hmr RALT L  &hmr RGUI SEMI  &mtb RIGHT_CONTROL SINGLE_QUOTE
+&mtb LCTRL GRAVE  &hml LGUI A  &hml LALT S  &hml LEFT_CONTROL D  &kp F                 &ltb 4 G                      &kp H         &kp J                    &hmr LEFT_CONTROL K  &hmr RALT L  &hmr RGUI SEMI  &mtb RIGHT_CONTROL SINGLE_QUOTE
 &kp LSHFT         &kp Z        &kp X        &kp C                &kp V                 &kp B         &none    &none  &kp N         &kp M                    &kp COMMA            &kp PERIOD   &kp FSLH        &kp RSHFT
                                             &kp LEFT_GUI         &mtb LEFT_GUI ESCAPE  &ltb 1 SPACE  &none    &none  &ltb 1 ENTER  &mtb LEFT_GUI BACKSPACE  &kp LEFT_ALT
             >;
@@ -158,11 +191,11 @@
 
             display-name = "symb";
             bindings = <
-&trans  &trans          &trans          &trans        &trans                 &trans                             &trans         &trans     &trans        &trans            &trans             &trans
-&trans  &kp NUMBER_1    &kp NUMBER_2    &kp NUMBER_3  &kp NUMBER_4           &kp N5                             &kp NUMBER_6   &kp N7     &kp N8        &kp N9            &kp N0             &trans
-&trans  &kp LEFT_SHIFT  &sk LEFT_SHIFT  &kp DELETE    &hml LEFT_CONTROL TAB  &kp BACKSPACE                      &kp LEFT       &kp DOWN   &kp UP_ARROW  &kp RIGHT         &kp RIGHT_SHIFT    &trans
-&trans  &kp BACKSLASH   &kp MINUS       &kp EQUAL     &kp LEFT_BRACKET       &kp RIGHT_BRACKET  &none    &none  &kp BACKSLASH  &kp MINUS  &kp EQUAL     &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &trans
-                                        &trans        &trans                 &trans             &none    &none  &trans         &trans     &trans
+&trans  &trans                             &trans        &trans        &trans                 &trans                             &trans         &trans     &trans        &trans            &trans                               &trans
+&trans  &kp NUMBER_1                       &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4           &kp N5                             &kp NUMBER_6   &kp N7     &kp N8        &kp N9            &kp N0                               &trans
+&trans  &htSkyShift LEFT_SHIFT LEFT_SHIFT  &none         &kp DELETE    &hml LEFT_CONTROL TAB  &kp BACKSPACE                      &kp LEFT       &kp DOWN   &kp UP_ARROW  &kp RIGHT         &htSkyShift RIGHT_SHIFT RIGHT_SHIFT  &trans
+&trans  &kp BACKSLASH                      &kp MINUS     &kp EQUAL     &kp LEFT_BRACKET       &kp RIGHT_BRACKET  &none    &none  &kp BACKSLASH  &kp MINUS  &kp EQUAL     &kp LEFT_BRACKET  &kp RIGHT_BRACKET                    &trans
+                                                         &trans        &trans                 &trans             &none    &none  &trans         &trans     &trans
             >;
         };
 
@@ -188,7 +221,7 @@
             >;
         };
 
-        misc_layer {
+        nav {
             // ------------------------------------------------------------------------------------------------------------
             // | BTCLR | BT0  | BT1 | BT2  | BT3  | BT4  |                   | USB  | BLE   | trans | trans| trans |BT_CLR_A|
             // | trans | trans|trans| trans| trans| trans|                   | trans| trans | trans | trans| trans | trans |
@@ -197,13 +230,13 @@
             //                     | trans| trans| trans|  n/a   |  |  n/a  | trans| trans | trans |
             // Note: Access via hold Enter - Bluetooth controls, USB/BLE switching, navigation keys
 
-            display-name = "misc";
+            display-name = "nav";
             bindings = <
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &out OUT_USB  &out OUT_BLE  &trans         &trans       &trans     &bt BT_CLR_ALL
-&trans      &trans        &trans        &trans        &trans        &trans                        &trans        &trans        &trans         &trans       &trans     &trans
-&trans      &trans        &trans        &trans        &trans        &trans                        &trans        &kp LEFT      &kp DOWN       &kp UP       &kp RIGHT  &trans
-&trans      &trans        &trans        &trans        &trans        &trans        &none    &none  &trans        &kp HOME      &kp PAGE_DOWN  &kp PAGE_UP  &kp END    &trans
-                                        &trans        &trans        &trans        &none    &none  &trans        &trans        &trans
+&trans  &trans                        &trans  &trans  &trans  &trans                  &trans          &trans          &trans        &trans           &trans  &trans
+&trans  &trans                        &trans  &trans  &trans  &trans                  &trans          &trans          &trans        &trans           &trans  &trans
+&trans  &htSkyShift LSHFT LEFT_SHIFT  &trans  &trans  &trans  &trans                  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW  &trans  &trans
+&trans  &trans                        &trans  &trans  &trans  &trans  &none    &none  &kp HOME        &kp PAGE_DOWN   &kp PAGE_UP   &kp END          &trans  &trans
+                                              &trans  &trans  &trans  &none    &none  &trans          &trans          &trans
             >;
         };
 
