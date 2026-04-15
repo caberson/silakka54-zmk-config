@@ -210,7 +210,7 @@
 
         cRBrc {
             bindings = <&kp RBRC>;
-            key-positions = <40 41>;
+            key-positions = <44 45>;
             layers = <0>;
             timeout-ms = <30>;
             require-prior-idle-ms = <150>;
